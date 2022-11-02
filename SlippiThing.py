@@ -1,4 +1,4 @@
-#Import the required Libraries
+    #Import the required Libraries
 import numbers
 from tkinter import *
 from tkinter import ttk
@@ -19,18 +19,22 @@ userPath = ""
 if os.stat("SlippiPath.txt") != 0:
     with open("SlippiPath.txt") as slipPath:
         userPath = slipPath.readline()
+        if userPath != "":
+            userPath += "\\user.json"
+        checker = True
 
 def setPath():
     if os.path.exists(entryU.get()):
-        userPath = entryU.get()
+        userPath = entryU.get() + "\\user.json"
 
         with open("SlippiPath.txt", "a") as slipPath:   
-            slipPath.write(entryU.get())
+            slipPath.write(entryU.get() + "\\user.json")
         
         for widget in win.winfo_children():
             widget.destroy()
 
         checker = True
+        win.quit()
 
     else:
         print(entryU.get())
@@ -47,6 +51,9 @@ if userPath == "":
 
     e = Button(win, text="Enter", font=("Courier 15 bold"), command=lambda : setPath())
     e.pack(side = BOTTOM, pady=10)
+
+    win.mainloop()
+
 
 
 def makeDo(list):
@@ -65,6 +72,7 @@ def makeDo(list):
     print(list)
 
 
+
 def make_button():
 
     eList = entryD.get()[2:len(lSplit[1]) - 1].split('"')
@@ -75,7 +83,7 @@ def make_button():
         slipPut.write(entryN.get() + "+" + entryD.get())
 
     
-while checker == True:
+if checker == True:
     if os.stat("SlippiStuff.txt") != 0:
         with open("SlippiStuff.txt") as slipFile:
             for line in slipFile:
